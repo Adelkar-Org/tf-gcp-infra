@@ -27,7 +27,7 @@ Follow these steps to get started with deploying your GCP infrastructure using T
 First, fork this repository into your namespace. Then, clone your forked repository locally:
 
 ```bash
-git clone https://github.com/<your-username>/tf-gcp-infra.git
+git clone https://github.com/Adelkar-Org/tf-gcp-infra.git
 cd tf-gcp-infra
 ```
 
@@ -87,8 +87,8 @@ terraform destroy
 Before deploying the infrastructure with Terraform, ensure the following GCP services are enabled for your project:
 
 - Compute Engine API (`compute.googleapis.com`)
-- Cloud Storage API (`storage-component.googleapis.com`)
-- Cloud SQL Admin API (`sqladmin.googleapis.com`)
+- Cloud Storage API (`storage-component.googleapis.com`) (not required now)
+- Cloud SQL Admin API (`sqladmin.googleapis.com`) (not required now)
 - Identity and Access Management (IAM) API (`iam.googleapis.com`)
 
 To enable these services:

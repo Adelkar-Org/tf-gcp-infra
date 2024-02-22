@@ -3,9 +3,9 @@ output "vpc_id" {
 }
 
 output "webapp_subnet_id" {
-  value = google_compute_subnetwork.webapp.id
+  value = google_compute_subnetwork.webapp_subnet.id
 }
 
 output "db_subnet_id" {
-  value = google_compute_subnetwork.db.id
+  value = google_compute_subnetwork.db_subnet.id
 }

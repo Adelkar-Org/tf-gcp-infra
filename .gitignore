@@ -39,3 +39,4 @@ terraform.rc
 
 # Ignore dev files
 dev/*
+temp*.*

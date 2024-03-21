@@ -25,5 +25,10 @@ resource "google_compute_instance" "webapp_vm_instance" {
 
   metadata_startup_script = file("startWebApp.sh")
 
+  service_account {
+    email  = google_service_account.logging_account.email
+    scopes = ["cloud-platform"]
+  }
+
   tags = [var.webapp_network_tag]
 }

@@ -5,10 +5,10 @@ resource "google_service_account" "logging_account" {
 
 resource "google_project_iam_binding" "logging_admin" {
   project = var.project_id
-  role    = "roles/logging.configWriter"
+  role    = "roles/logging.admin"
 
   members = [
-    "serviceAccount:logging-account@${var.project_id}.iam.gserviceaccount.com",
+    "serviceAccount:${google_service_account.logging_account.email}",
   ]
 }
 
@@ -17,6 +17,6 @@ resource "google_project_iam_binding" "monitoring_metric_writer" {
   role    = "roles/monitoring.metricWriter"
 
   members = [
-    "serviceAccount:logging-account@${var.project_id}.iam.gserviceaccount.com",
+    "serviceAccount:${google_service_account.logging_account.email}",
   ]
 }

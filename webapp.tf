@@ -23,7 +23,7 @@ resource "google_compute_instance" "webapp_vm_instance" {
     db_host     = google_sql_database_instance.cloudsql_instance.private_ip_address
   }
 
-  metadata_startup_script = file("startWebApp.sh")
+  metadata_startup_script = file("start-webapp.sh")
 
   service_account {
     email  = google_service_account.logging_account.email

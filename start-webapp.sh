@@ -15,6 +15,4 @@ DB_PASSWORD=$DB_PASSWORD
 DB_HOST=$DB_HOST
 EOF
 
-# sudo systemctl restart google-cloud-ops-agent
-
 sudo systemctl start webapp.service

@@ -214,3 +214,42 @@ variable "cloudsql_user_name" {
   type        = string
   default     = "webapp"
 }
+
+# DNS variables
+variable "dns_zone_name" {
+  description = "The name of the DNS zone"
+  type        = string
+  default     = "webapp-dns-zone"
+}
+
+variable "dns_record_name" {
+  description = "The name of the DNS record"
+  type        = string
+  default     = "adelkar.me."
+}
+
+# Logging variables
+variable "logging_account_name" {
+  description = "The name of the logging account"
+  type        = string
+  default     = "logging-account"
+}
+
+variable "logging_account_display_name" {
+  description = "The display name of the logging account"
+  type        = string
+  default     = "Logging Account"
+}
+
+variable "logging_admin_role" {
+  description = "The role for logging admin"
+  type        = string
+  default     = "roles/logging.admin"
+}
+
+variable "monitoring_metric_writer_role" {
+  description = "The role for monitoring metric writer"
+  type        = string
+  default     = "roles/monitoring.metricWriter"
+}
+

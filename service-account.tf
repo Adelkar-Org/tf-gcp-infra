@@ -1,3 +1,8 @@
+resource "google_service_account" "gcf_sa" {
+  account_id   = "gcf-sa"
+  display_name = "GFC Service Account"
+}
+
 resource "google_service_account" "logging_account" {
   account_id   = var.logging_account_name
   display_name = var.logging_account_display_name

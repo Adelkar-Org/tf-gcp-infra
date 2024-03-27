@@ -1,4 +1,4 @@
 resource "google_pubsub_topic" "verify_email" {
-  name                       = "verify_email"
-  message_retention_duration = "604800s" # 7 days in seconds
+  name                       = var.pubsub_topic_name
+  message_retention_duration = var.pubsub_topic_message_retention_duration # 7 days in seconds
 }

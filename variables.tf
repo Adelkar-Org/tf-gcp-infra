@@ -177,7 +177,11 @@ variable "cloudsql_database_version" {
   type        = string
   default     = "MYSQL_8_0"
 }
-
+variable "cloudsql_database_dialect" {
+  description = "Database dialect for the Cloud SQL instance"
+  type        = string
+  default     = "mysql"
+}
 variable "cloudsql_tier" {
   description = "The tier (machine type) for the Cloud SQL instance"
   type        = string
@@ -251,5 +255,150 @@ variable "monitoring_metric_writer_role" {
   description = "The role for monitoring metric writer"
   type        = string
   default     = "roles/monitoring.metricWriter"
+}
+
+# pubsub variables 
+variable "pubsub_topic_name" {
+  description = "The name of the pubsub topic"
+  type        = string
+  default     = "verify_email"
+}
+
+variable "pubsub_topic_message_retention_duration" {
+  description = "The message retention duration of the pubsub topic"
+  type        = string
+  default     = "604800s" # 7 days in seconds
+
+}
+
+# GCF bucket variables
+variable "gcf_source_bucket_location" {
+  description = "The location of the GCF source bucket"
+  type        = string
+  default     = "US"
+}
+
+variable "gcf_source_bucket_object_name" {
+  description = "The name of the GCF source bucket object"
+  type        = string
+  default     = "function-source.zip"
+
+}
+
+variable "gcf_source_bucket_name" {
+  description = "The name of the GCF source bucket"
+  type        = string
+  default     = "gcf-source-bucket"
+}
+
+# GCF connactor variables 
+variable "gcf_connector_name" {
+  description = "The name of the GCF connector"
+  type        = string
+  default     = "gcf-connector"
+}
+
+variable "gcf_connector_ip_cidr_range" {
+  description = "The ip cidr range for the GCF connector"
+  type        = string
+  default     = "10.0.3.0/28"
+}
+
+# GCF service account variables
+variable "gcf_sa_name" {
+  description = "The name of the GCF service account"
+  type        = string
+  default     = "gcf-sa"
+}
+
+variable "gcf_sa_display_name" {
+  description = "The display name of the GCF service account"
+  type        = string
+  default     = "GCF Service Account"
+}
+
+variable "pubsub_publisher_role" {
+  description = "The role for pubsub publisher"
+  type        = string
+  default     = "roles/pubsub.publisher"
+}
+
+# gcf variables
+variable "gcf_name" {
+  description = "The name of the GCF function"
+  type        = string
+  default     = "verify-email"
+}
+variable "gcf_description" {
+  description = "The description of the GCF function"
+  type        = string
+  default     = "function to verify email by sending an verification code on email"
+}
+
+variable "gcf_entry_point" {
+  description = "The entry point of the GCF function"
+  type        = string
+  default     = "verifyEmail"
+}
+
+variable "gcf_runtime" {
+  description = "The runtime of the GCF function"
+  type        = string
+  default     = "nodejs20"
+}
+
+variable "gcf_config_max_instance_count" {
+  description = "The max instance count of the GCF function"
+  type        = number
+  default     = 1
+}
+
+variable "gcf_config_min_instance_count" {
+  description = "The min instance count of the GCF function"
+  type        = number
+  default     = 1
+}
+
+variable "gcf_config_available_memory" {
+  description = "The available memory of the GCF function"
+  type        = string
+  default     = "256M"
+}
+
+variable "gcf_config_vpc_ingress_settings" {
+  description = "The vpc ingress settings of the GCF function"
+  type        = string
+  default     = "ALLOW_INTERNAL_ONLY"
+
+}
+
+variable "gcf_config_timeout_seconds" {
+  description = "The timeout seconds of the GCF function"
+  type        = number
+  default     = 60
+}
+
+# event_type
+variable "gcf_config_event_trigger_event_type" {
+  description = "The event type of the GCF function"
+  type        = string
+  default     = "google.cloud.pubsub.topic.v1.messagePublished"
+}
+variable "gcf_config_event_trigger_retry_policy" {
+  description = "The retry policy of the GCF function"
+  type        = string
+  default     = "RETRY_POLICY_RETRY"
+}
+
+# gcf env variables
+variable "mailgun_api_key" {
+  description = "The Mailgun API key"
+  type        = string
+}
+
+variable "mailgun_domain" {
+  description = "The Mailgun domain"
+  type        = string
+  default     = "adelkar.me"
 }
 

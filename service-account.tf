@@ -8,6 +8,17 @@ resource "google_service_account" "logging_account" {
   display_name = var.logging_account_display_name
 }
 
+resource "google_service_account" "vm_instance_account" {
+  account_id   = "vm-instance-account"
+  display_name = "VM Instance Service Account"
+}
+
+resource "google_project_iam_member" "vm_instance_member" {
+  project = var.project_id
+  role    = "roles/compute.instanceAdmin.v1"
+  member  = "serviceAccount:${google_service_account.vm_instance_account.email}"
+}
+
 resource "google_project_iam_binding" "logging_admin" {
   project = var.project_id
   role    = var.logging_admin_role

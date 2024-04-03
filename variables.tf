@@ -53,6 +53,11 @@ variable "subnetwork2_ip_cidr_range" {
   type        = string
   default     = "10.0.2.0/24"
 }
+variable "subnetwork3_ip_cidr_range" {
+  description = "The ip cidr range subnetwork 2"
+  type        = string
+  default     = "10.0.4.0/24"
+}
 
 # Route variables
 variable "route_name" {

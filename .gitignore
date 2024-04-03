@@ -42,3 +42,6 @@ dev/*
 temp*.*
 
 serverless/
+
+privatekey.txt
+adelkar_me.crt

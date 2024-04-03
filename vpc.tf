@@ -21,3 +21,11 @@ resource "google_compute_subnetwork" "db_subnet" {
   private_ip_google_access = true
 }
 
+resource "google_compute_subnetwork" "proxy_only_subnet" {
+  name          = "proxy-only-subnet"
+  ip_cidr_range = var.subnetwork3_ip_cidr_range
+  network       = google_compute_network.vpc_network.self_link
+  purpose       = "REGIONAL_MANAGED_PROXY"
+  region        = var.region
+  role          = "ACTIVE"
+}

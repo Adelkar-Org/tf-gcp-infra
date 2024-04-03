@@ -15,7 +15,7 @@ resource "google_compute_address" "default" {
 resource "google_compute_region_url_map" "default" {
   name            = "webapp-url-map"
   region          = var.region
-  default_service = google_compute_backend_service.default.id
+  default_service = google_compute_region_backend_service.default.id
 }
 
 resource "google_compute_region_target_https_proxy" "default" {

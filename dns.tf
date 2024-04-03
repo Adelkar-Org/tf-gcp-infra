@@ -17,5 +17,5 @@ resource "google_dns_record_set" "frontend" {
   type         = "A"
   ttl          = 300
   managed_zone = data.google_dns_managed_zone.webapp_dns_zone.name //default
-  rrdatas      = [google_compute_global_forwarding_rule.default.ip_address]
+  rrdatas      = [google_compute_forwarding_rule.default.ip_address]
 }

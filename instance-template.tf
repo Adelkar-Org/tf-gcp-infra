@@ -41,15 +41,15 @@ resource "google_compute_region_instance_template" "template" {
 }
 
 resource "google_compute_region_health_check" "default" {
-  name        = "webapp-health-check"
-  description = "Webapp health check via https"
-
+  name                = "webapp-health-check"
+  description         = "Webapp health check via https"
+  region              = var.region
+  check_interval_sec  = 10
   timeout_sec         = 5
-  check_interval_sec  = 5
-  healthy_threshold   = 5
+  healthy_threshold   = 3
   unhealthy_threshold = 5
 
-  https_health_check {
+  http_health_check {
     port         = 8080
     request_path = "/healthz"
   }
@@ -74,10 +74,10 @@ resource "google_compute_region_autoscaler" "default" {
 }
 
 resource "google_compute_region_instance_group_manager" "default" {
-  name               = "webapp-instance-group"
-  region             = var.region
-  base_instance_name = "webapp"
-  # target_size        = 1 //var.min_replicas
+  name                      = "webapp-instance-group"
+  region                    = var.region
+  base_instance_name        = "webapp"
+  target_size               = 1 //var.min_replicas
   distribution_policy_zones = [var.zone]
 
   version {

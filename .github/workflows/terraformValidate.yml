@@ -19,6 +19,12 @@ jobs:
         with:
           terraform_version: 1.0.0
 
+      - name: Create Private Key File
+        run: echo "${{ secrets.PRIVATE_KEY }}" > privatekey.txt
+
+      - name: Create Certificate File
+        run: echo "${{ secrets.CERTIFICATE }}" > adelkar_me.crt
+
       - name: Terraform Init
         run: terraform init
 

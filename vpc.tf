@@ -22,10 +22,10 @@ resource "google_compute_subnetwork" "db_subnet" {
 }
 
 resource "google_compute_subnetwork" "proxy_only_subnet" {
-  name          = "proxy-only-subnet"
+  name          = var.subnetwork3_name
   ip_cidr_range = var.subnetwork3_ip_cidr_range
   network       = google_compute_network.vpc_network.self_link
-  purpose       = "REGIONAL_MANAGED_PROXY"
+  purpose       = var.subnetwork3_purpose
   region        = var.region
-  role          = "ACTIVE"
+  role          = var.subnetwork3_role
 }

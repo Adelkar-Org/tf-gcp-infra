@@ -53,6 +53,24 @@ variable "subnetwork2_ip_cidr_range" {
   type        = string
   default     = "10.0.2.0/24"
 }
+
+variable "subnetwork3_name" {
+  description = "The name for subnetwork 3"
+  type        = string
+  default     = "proxy-only-subnet"
+}
+
+variable "subnetwork3_purpose" {
+  description = "The purpose for subnetwork 3"
+  type        = string
+  default     = "REGIONAL_MANAGED_PROXY"
+}
+
+variable "subnetwork3_role" {
+  description = "The role for subnetwork 3"
+  type        = string
+  default     = "ACTIVE"
+}
 variable "subnetwork3_ip_cidr_range" {
   description = "The ip cidr range subnetwork 2"
   type        = string
@@ -328,6 +346,25 @@ variable "pubsub_publisher_role" {
   default     = "roles/pubsub.publisher"
 }
 
+# service account variables
+variable "vm_instance_account_name" {
+  description = "The name of the VM instance service account"
+  type        = string
+  default     = "vm-instance-account"
+}
+
+variable "vm_instance_account_display_name" {
+  description = "The display name of the VM instance service account"
+  type        = string
+  default     = "VM Instance Service Account"
+}
+
+variable "vm_instance_role" {
+  description = "The role for the VM instance"
+  type        = string
+  default     = "roles/compute.instanceAdmin.v1"
+}
+
 # gcf variables
 variable "gcf_name" {
   description = "The name of the GCF function"
@@ -406,4 +443,213 @@ variable "mailgun_domain" {
   type        = string
   default     = "adelkar.me"
 }
+# loadbalancer variables
 
+
+
+# backend service variables
+variable "backend_service_balancing_mode" {
+  description = "The balancing mode of the backend service"
+  type        = string
+  default     = "UTILIZATION"
+}
+
+variable "backend_service_name" {
+  description = "The name of the backend service"
+  type        = string
+  default     = "webapp-backend-service"
+
+}
+variable "backend_service_protocol" {
+  description = ""
+  type        = string
+  default     = "HTTP"
+
+}
+variable "backend_service_port_name" {
+  description = ""
+  type        = string
+  default     = "http"
+
+}
+variable "backend_service_load_balancing_scheme" {
+  description = ""
+  type        = string
+  default     = "EXTERNAL_MANAGED"
+
+}
+variable "backend_service_session_affinity" {
+  description = ""
+  type        = string
+  default     = "NONE"
+
+}
+variable "backend_service_timeout_sec" {
+  description = ""
+  type        = number
+  default     = 10
+
+}
+
+
+variable "webapp_address_name" {
+  description = "The name of the external address"
+  type        = string
+  default     = "webapp-address"
+}
+
+variable "webapp_url_map_name" {
+  description = "The name of the URL map"
+  type        = string
+  default     = "webapp-url-map"
+}
+
+variable "https_proxy_name" {
+  description = "The name of the HTTPS proxy"
+  type        = string
+  default     = "webapp-https-proxy"
+}
+
+variable "ssl_certificate_name" {
+  description = "The name of the SSL certificate"
+  type        = string
+  default     = "webapp-certificate"
+}
+
+variable "forwarding_rule_name" {
+  description = "The name of the forwarding rule"
+  type        = string
+  default     = "webapp-https-forwarding-rule"
+}
+
+
+# google_compute_region_instance_template
+variable "webapp_template_name" {
+  description = "The name of the instance template"
+  type        = string
+  default     = "webapp-template"
+}
+
+# google_compute_region_health_check
+variable "health_check_name" {
+  description = "The name of the health check"
+  type        = string
+  default     = "webapp-health-check"
+}
+
+variable "health_check_description" {
+  description = "The description of the health check"
+  type        = string
+  default     = "Webapp health check via http"
+
+}
+
+variable "check_interval_sec" {
+  description = "The interval between health checks"
+  type        = number
+  default     = 10
+}
+
+variable "timeout_sec" {
+  description = "The timeout for health checks"
+  type        = number
+  default     = 5
+}
+
+variable "healthy_threshold" {
+  description = "The number of consecutive successful health checks"
+  type        = number
+  default     = 3
+}
+
+variable "unhealthy_threshold" {
+  description = "The number of consecutive failed health checks"
+  type        = number
+  default     = 5
+}
+
+variable "health_check_port" {
+  description = "The port for the health check"
+  type        = number
+  default     = 8080
+}
+
+variable "health_check_request_path" {
+  description = "The path for the health check"
+  type        = string
+  default     = "/healthz"
+}
+
+variable "autoscaler_name" {
+  description = "The name of the autoscaler"
+  type        = string
+  default     = "webapp-autoscaler"
+}
+
+variable "max_replicas" {
+  description = "The maximum number of replicas"
+  type        = number
+  default     = 2
+}
+
+variable "min_replicas" {
+  description = "The minimum number of replicas"
+  type        = number
+  default     = 1
+}
+
+variable "cooldown_period" {
+  description = "The cooldown period"
+  type        = number
+  default     = 60
+}
+
+variable "cpu_utilization_target" {
+  description = "The target CPU utilization"
+  type        = number
+  default     = 0.05
+}
+
+variable "instance_group_name" {
+  description = "The name of the instance group"
+  type        = string
+  default     = "webapp-instance-group"
+}
+
+variable "base_instance_name" {
+  description = "The base name for the instances"
+  type        = string
+  default     = "webapp"
+}
+
+variable "target_size" {
+  description = "The target size for the instance group"
+  type        = number
+  default     = 1
+}
+
+
+variable "named_port_name" {
+  description = "The name of the named port"
+  type        = string
+  default     = "http"
+}
+
+variable "named_port_port" {
+  description = "The port for the named port"
+  type        = number
+  default     = 8080
+}
+
+
+variable "auto_healing_initial_delay_sec" {
+  description = "The initial delay for auto healing"
+  type        = number
+  default     = 300
+}
+
+variable "firewall_lb_name" {
+  description = "The name of the firewall for the load balancer"
+  type        = string
+  default     = "webapp-lb-to-instances"
+}

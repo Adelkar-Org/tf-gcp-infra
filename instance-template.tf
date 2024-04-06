@@ -1,11 +1,10 @@
 resource "google_compute_region_instance_template" "template" {
-  name         = "webapp-template"
+  name         = var.webapp_template_name
   machine_type = var.webapp_machine_type
   region       = var.region
 
   disk {
     source_image = var.webapp_custom_image
-    # auto_delete  = true
     boot         = true
     disk_size_gb = var.webapp_disk_size
     disk_type    = var.webapp_disk_type
@@ -41,32 +40,32 @@ resource "google_compute_region_instance_template" "template" {
 }
 
 resource "google_compute_region_health_check" "default" {
-  name                = "webapp-health-check"
-  description         = "Webapp health check via https"
+  name                = var.health_check_name
+  description         = var.health_check_description
   region              = var.region
-  check_interval_sec  = 10
-  timeout_sec         = 5
-  healthy_threshold   = 3
-  unhealthy_threshold = 5
+  check_interval_sec  = var.check_interval_sec
+  timeout_sec         = var.timeout_sec
+  healthy_threshold   = var.healthy_threshold
+  unhealthy_threshold = var.unhealthy_threshold
 
   http_health_check {
-    port         = 8080
-    request_path = "/healthz"
+    port         = var.health_check_port
+    request_path = var.health_check_request_path
   }
 }
 
 resource "google_compute_region_autoscaler" "default" {
-  name   = "webapp-autoscaler"
+  name   = var.autoscaler_name
   region = var.region
   target = google_compute_region_instance_group_manager.default.id
 
   autoscaling_policy {
-    max_replicas    = 2 //var.max_replicas
-    min_replicas    = 1 //var.min_replicas
-    cooldown_period = 60
+    max_replicas    = var.max_replicas
+    min_replicas    = var.min_replicas
+    cooldown_period = var.cooldown_period
 
     cpu_utilization {
-      target = 0.05 # 5% CPU usage
+      target = var.cpu_utilization_target
     }
   }
 
@@ -74,10 +73,10 @@ resource "google_compute_region_autoscaler" "default" {
 }
 
 resource "google_compute_region_instance_group_manager" "default" {
-  name                      = "webapp-instance-group"
+  name                      = var.instance_group_name
   region                    = var.region
-  base_instance_name        = "webapp"
-  target_size               = 1 //var.min_replicas
+  base_instance_name        = var.base_instance_name
+  target_size               = var.target_size
   distribution_policy_zones = [var.zone]
 
   version {
@@ -85,19 +84,16 @@ resource "google_compute_region_instance_group_manager" "default" {
   }
 
   named_port {
-    name = "http"
-    port = 8080
+    name = var.named_port_name
+    port = var.named_port_port
   }
 
   auto_healing_policies {
     health_check      = google_compute_region_health_check.default.id
-    initial_delay_sec = 300
+    initial_delay_sec = var.auto_healing_initial_delay_sec
   }
 
   depends_on = [google_compute_region_instance_template.template]
-  # lifecycle {
-  #   prevent_destroy = false
-  # }
 }
 
 

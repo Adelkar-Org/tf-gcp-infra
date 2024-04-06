@@ -1,25 +1,18 @@
 resource "google_compute_address" "default" {
-  name         = "webapp-address"
+  name         = var.webapp_address_name
   address_type = "EXTERNAL"
   network_tier = "STANDARD"
   region       = var.region
 }
 
-# resource "google_compute_managed_ssl_certificate" "default" {
-#   name = "webapp-ssl-cert"
-#   managed {
-#     domains = [var.dns_record_name]
-#   }
-# }
-
 resource "google_compute_region_url_map" "default" {
-  name            = "webapp-url-map"
+  name            = var.webapp_url_map_name
   region          = var.region
   default_service = google_compute_region_backend_service.default.id
 }
 
 resource "google_compute_region_target_https_proxy" "default" {
-  name             = "webapp-https-proxy"
+  name             = var.https_proxy_name
   region           = var.region
   url_map          = google_compute_region_url_map.default.id
   ssl_certificates = [google_compute_region_ssl_certificate.default.id]
@@ -27,13 +20,13 @@ resource "google_compute_region_target_https_proxy" "default" {
 
 resource "google_compute_region_ssl_certificate" "default" {
   region      = var.region
-  name        = "certificate"
+  name        = var.ssl_certificate_name
   private_key = file("privatekey.txt")
   certificate = file("adelkar_me.crt")
 }
 
 resource "google_compute_forwarding_rule" "default" {
-  name                  = "webapp-https-forwarding-rule"
+  name                  = var.forwarding_rule_name
   region                = var.region
   ip_protocol           = "TCP"
   load_balancing_scheme = "EXTERNAL_MANAGED"

@@ -23,7 +23,7 @@ jobs:
         run: echo "${{ secrets.PRIVATE_KEY }}" > privatekey.txt
 
       - name: Create Certificate File
-        run: echo "${{ secrets.CERTIFICATE }}" > adelkar_me.crt
+        run: echo "${{ secrets.CERTIFICATE }}" > full_chain.crt
 
       - name: Terraform Init
         run: terraform init

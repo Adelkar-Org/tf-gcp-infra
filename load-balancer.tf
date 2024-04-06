@@ -22,7 +22,7 @@ resource "google_compute_region_ssl_certificate" "default" {
   region      = var.region
   name        = var.ssl_certificate_name
   private_key = file("privatekey.txt")
-  certificate = file("adelkar_me.crt")
+  certificate = file("full_chain.crt")
 }
 
 resource "google_compute_forwarding_rule" "default" {

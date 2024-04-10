@@ -2,11 +2,36 @@ resource "google_service_account" "gcf_sa" {
   account_id   = var.gcf_sa_name
   display_name = var.gcf_sa_display_name
 }
-
-# resource "google_service_account" "logging_account" {
-#   account_id   = var.logging_account_name
-#   display_name = var.logging_account_display_name
+# create a service account for customer-managed encryption keys.
+# resource "google_service_account" "kms_sa" {
+#   account_id   = "cmek-sa" # var.kms_sa_name
+#   display_name = "CMEK SA" # var.kms_sa_display_name
 # }
+
+resource "google_project_service_identity" "gcp_sa_cloud_sql" {
+  project  = var.project_id
+  provider = google-beta
+  service  = "sqladmin.googleapis.com"
+}
+
+resource "google_kms_crypto_key_iam_binding" "crypto_key" {
+  provider      = google-beta
+  crypto_key_id = google_kms_crypto_key.sql_key.id
+  role          = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
+
+  members = [
+    "serviceAccount:${google_project_service_identity.gcp_sa_cloud_sql.email}",
+    "serviceAccount:${google_service_account.vm_instance_account.email}",
+  ]
+}
+
+resource "google_kms_crypto_key_iam_member" "crypto_key_iam_member" {
+  crypto_key_id = google_kms_crypto_key.storage_key.id
+  role          = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
+  # member        = "serviceAccount:service-${var.project_number}@gs-project-accounts.iam.gserviceaccount.com"
+  member = "serviceAccount:service-243008312509@gs-project-accounts.iam.gserviceaccount.com"
+}
+
 
 resource "google_service_account" "vm_instance_account" {
   account_id   = var.vm_instance_account_name

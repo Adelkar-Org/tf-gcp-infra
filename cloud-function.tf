@@ -4,8 +4,11 @@ resource "random_id" "bucket_prefix" {
 
 resource "google_storage_bucket" "verify_email_gcf_source" {
   name                        = "${random_id.bucket_prefix.hex}-verify-email-gcf-source" # Every bucket name must be globally unique
-  location                    = var.gcf_source_bucket_location
+  location                    = var.region
   uniform_bucket_level_access = true
+  encryption {
+    default_kms_key_name = google_kms_crypto_key.storage_key.id
+  }
 }
 
 data "archive_file" "source_code" {

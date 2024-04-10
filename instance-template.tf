@@ -8,6 +8,9 @@ resource "google_compute_region_instance_template" "template" {
     boot         = true
     disk_size_gb = var.webapp_disk_size
     disk_type    = var.webapp_disk_type
+    disk_encryption_key {
+      kms_key_self_link = google_kms_crypto_key.vm_key.id
+    }
   }
 
   network_interface {
